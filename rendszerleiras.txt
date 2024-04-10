@@ -6,7 +6,7 @@ internetkapcsolat
 
 -- Szerver oldali követelmények --
 Telepített Django -és Bootstrap keretrendszerek,
-Python 3.12,
+Python 3.10.13,
 PostgreSQL relációsadatbázis-kezelő rendszer,
 Docker
 
