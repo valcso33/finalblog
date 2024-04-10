@@ -1,0 +1,25 @@
+Blog alkalmazás
+
+-- Kliens oldali követelmények --
+Böngésző (legfrissebb verzió),
+internetkapcsolat
+
+-- Szerver oldali követelmények --
+Telepített Django -és Bootstrap keretrendszerek,
+Python 3.12,
+PostgreSQL relációsadatbázis-kezelő rendszer,
+Docker
+
+-- Backend --
+Debian szerver, Dockeren futtatható a szerver
+- Docker -
+docker exec -it container_id python manage.py createsuperuser
+docker exec -i 1a0f4e662913 python manage.py shell
+from scripts.generate_data import *
+docker-compose exec web python manage.py makemigrations --noinput
+docker-compose exec web python manage.py migrate --noinput
+docker-compose up -d --build
+docker-compose build
+
+-- Szerver-kliens kommunikáció --
+API hívások segítségével
