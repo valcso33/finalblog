@@ -1,21 +1,21 @@
-<!-- templates/core/home.html -->
+<!-- templates/core/tag_filter.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <!-- Add a dropdown menu for filtering by tag -->
-  <div class="navbar-nav">
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Filter by Tag
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  {% for tag in tags %}
-                  <a class="dropdown-item" href="{% url 'core:tag_filter' tag.slug %}">{{ tag.name }}</a>
-                  {% endfor %}
-                </div>
-              </li>
-            </div>        
-  <div class="container mt-5">
+<div class="navbar-nav">
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Filter by Tag
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        {% for tag in tags %}
+        <a class="dropdown-item" href="{% url 'core:tag_filter' tag.slug %}">{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+    </li>
+  </div>        
+<div class="container mt-5">
 
   <div class="row">
     {% for post in object_list %}

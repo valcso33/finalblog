@@ -1,14 +1,19 @@
-from django.db import models
-
 # Create your models here.
 from django.db import models
 from django.conf import settings
+from autoslug import AutoSlugField
 
 class Tag(models.Model):
-  name = models.CharField(max_length=40)
+    name = models.CharField(max_length=40)
+    slug = models.SlugField(max_length=200, null=False, blank=True)
 
-  def __str__(self):
-      return self.name
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     title = models.CharField(max_length=200, db_index=True)

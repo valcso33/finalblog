@@ -1,12 +1,7 @@
+# views.py
 from django.views.generic import ListView, DetailView
-from .models import Post, Comment
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView
-)
+from .models import Post, Comment, Tag
+from django.views.generic import CreateView, UpdateView, DeleteView
 from .form import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
@@ -17,7 +12,26 @@ from django.contrib import messages
 class HomeView(ListView):
     template_name = 'core/home.html'
     queryset = Post.objects.all()
-    paginate_by = 2
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all()
+        return context
+
+class TagFilterView(ListView):
+    template_name = 'core/tag_filter.html'
+    context_object_name = 'object_list'  # Change this if needed
+    paginate_by = 10
+
+    def get_queryset(self):
+        tag_slug = self.kwargs['tag_slug']
+        return Post.objects.filter(tags__slug=tag_slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tags'] = Tag.objects.all()  # Pass all tags to the context
+        return context
 
 class PostView(DetailView):
     model = Post
