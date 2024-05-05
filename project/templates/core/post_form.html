@@ -40,7 +40,7 @@
 
         <div class="form-group">
           {{ form.tags.label_tag }}<br>
-          <select class="custom-select w-25" name="tags" id="id_tags" multiple>
+          <select class="custom-select w-25 {% if form.tags.errors %}is-invalid{% endif %}" name="tags" id="id_tags" multiple required>
             {% for name, value in form.tags.field.choices %}
             <option value="{{ name }}">{{ value }}</option>
             {% endfor %}

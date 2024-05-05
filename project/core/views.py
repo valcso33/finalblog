@@ -1,7 +1,7 @@
 # views.py
 from django.views.generic import ListView, DetailView
 from .models import Post, Comment, Tag
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView
 from .form import CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404
@@ -113,14 +113,3 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         return self.model.objects.filter(author=self.request.user)
 
-
-class PostDeleteView(LoginRequiredMixin, DeleteView):
-    model = Post
-
-    def get_success_url(self):
-        messages.success(
-            self.request, 'Your post has been deleted successfully.')
-        return reverse_lazy("core:home")
-
-    def get_queryset(self):
-        return self.model.objects.filter(author=self.request.user)

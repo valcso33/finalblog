@@ -1,87 +1,87 @@
-<!-- templates/core/tag_filter.html -->
 {% extends 'base.html' %}
 
 {% block content %}
 <!-- Add a dropdown menu for filtering by tag -->
-<div class="navbar-nav">
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Filter by Tag
-      </a>
-      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-        {% for tag in tags %}
-        <a class="dropdown-item" href="{% url 'core:tag_filter' tag.slug %}">{{ tag.name }}</a>
-        {% endfor %}
-      </div>
-    </li>
-  </div>        
 <div class="container mt-5">
-
-  <div class="row">
-    {% for post in object_list %}
-    <div class="card col-lg-6 offset-lg-3 mb-3">
-      {% if post.image %}
-      <img class="card-img-top mt-3" src="{{ post.image.url }}" alt="{{ post.title }}">
-      {% endif %}
-      <div class="card-body">
-        <a href="{% url 'core:post' post.id post.slug %}">
-          <h2 class="card-title my-3">{{ post.title }} </h2>
-        </a>
-        <div class="text-muted mb-3">
-          <div>
-            <span>created: {{ post.created_on|date:"N j Y" }} |</span>
-            <span>updated: {{ post.updated_on|timesince }} ago |</span>
-            <span>author: {{ post.author }}</span>
-          </div>
-          <div>
-            {% for tag in post.tags.all %}
-            <span class="badge badge-dark">{{ tag }}</span>
-            {% endfor %}
-          </div>
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="navbar-nav d-inline">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter by Tag
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        {% for tag in tags %}
+                        <a class="dropdown-item" href="{% url 'core:tag_filter' tag.slug %}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                </li>
+            </div>
         </div>
-        <!-- Remove the content related to post -->
-        <!-- <p class="card-text">{{ post.content|truncatewords:20 }}</p>
-        <a class='btn btn-primary' href="{% url 'core:post' post.id post.slug %}">Read more ...</a> -->
-      </div>
     </div>
-    {% endfor %}
-  </div>
 
-  <!-- Pagination -->
-  <div class="row">
-    <nav class="col-lg-6 offset-lg-3 mt-4 d-flex justify-content-center">
-      <ul class="pagination">
-
-        {% if page_obj.has_previous %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" href="#">Previous</a>
-        </li>
-        {% endif %}
-  
-        {% for i in page_obj.paginator.page_range %}
-        <li class=" page-item {% if page_obj.number == i %}active{% endif %}">
-            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-        </li>
+    <div class="row mt-5">
+        {% for post in object_list %}
+        <div class="card col-lg-6 offset-lg-3 mb-3">
+            {% if post.image %}
+            <img class="card-img-top mt-3" src="{{ post.image.url }}" alt="{{ post.title }}">
+            {% endif %}
+            <div class="card-body">
+                <a href="{% url 'core:post' post.id post.slug %}">
+                    <h2 class="card-title my-3">{{ post.title }} </h2>
+                </a>
+                <div class="text-muted mb-3">
+                    <div>
+                        <span>created: {{ post.created_on|date:"N j Y" }} |</span>
+                        <span>updated: {{ post.updated_on|timesince }} ago |</span>
+                        <span>author: {{ post.author }}</span>
+                    </div>
+                    <div>
+                        {% for tag in post.tags.all %}
+                        <span class="badge badge-dark">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
         {% endfor %}
+    </div>
 
-        {% if page_obj.has_next %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" href="#">Next</a>
-        </li>
-        {% endif %}
+    <!-- Pagination -->
+    <div class="row">
+        <nav class="col-lg-6 offset-lg-3 mt-4 d-flex justify-content-center">
+            <ul class="pagination">
 
-      </ul>
-    </nav>
-  </div>
-  <!-- /Pagination -->
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Previous</a>
+                </li>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    </div>
+    <!-- /Pagination -->
 
 </div>
 {% endblock %}
