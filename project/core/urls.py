@@ -9,4 +9,5 @@ urlpatterns = [
     path('post/create/', PostCreateView.as_view(), name='post_create'),
     path('post/<int:pk>/', PostUpdateView.as_view(), name='post_update'),
     path('tag/<slug:tag_slug>/', TagFilterView.as_view(), name='tag_filter'),
+    path('post/<pk>/<slug:slug>/', PostView.as_view(), name='post_detail'),
 ]

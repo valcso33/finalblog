@@ -9,6 +9,7 @@ from django.utils.text import slugify
 from django.urls import reverse_lazy
 from django.contrib import messages
 
+
 class HomeView(ListView):
     template_name = 'core/home.html'
     queryset = Post.objects.all()
@@ -112,4 +113,5 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_queryset(self):
         return self.model.objects.filter(author=self.request.user)
+
 

@@ -1,6 +1,6 @@
 # users/urls.py         <-- create this file
 from django.urls import path
-from .views import signup, log_in, log_out, profile, edit_profile
+from .views import signup, log_in, log_out, profile, edit_profile, user_commented_topics
 from django.contrib.auth.views import (
     PasswordResetView,
     PasswordResetDoneView,
@@ -45,4 +45,6 @@ urlpatterns = [
     path('password_change/done/', PasswordChangeDoneView.as_view(
         template_name='users/password_change_done.html'),
         name='password_change_done'),
+    path('commented_topics/', user_commented_topics, name='commented_topics')
+    
 ]

@@ -5,6 +5,7 @@ from django.urls import reverse
 from .forms import SignUpForm, LoginForm, EditProfileForm
 from django.contrib import messages
 from .models import User, Profile
+from core.models import *
 
 
 def signup(request):
@@ -77,3 +78,8 @@ def edit_profile(request):
     else:
         form = EditProfileForm(request.user.username)   # <-- add also here 
     return render(request, "users/edit_profile.html", {'form': form})
+
+@login_required
+def user_commented_topics(request):
+    commented_posts = Post.objects.filter(comment__email=request.user.email).distinct()
+    return render(request, 'users/commented_topics.html', {'posts': commented_posts})

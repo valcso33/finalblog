@@ -2,6 +2,8 @@
 from django.db import models
 from django.conf import settings
 from autoslug import AutoSlugField
+from django.contrib.auth.models import User
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=40)
