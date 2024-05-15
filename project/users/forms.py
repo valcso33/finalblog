@@ -21,12 +21,7 @@ class EditProfileForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.original_username = original_username
 
-    def clean_username(self):
-        """
-        This function throws an exception if the username has already been 
-        taken by another user
-        """
-
+    def clean_username(self):#Dob egy exceptiont ha a felh már foglalt
         username = self.cleaned_data['username']
         if username != self.original_username:
             if User.objects.filter(username=username).exists():

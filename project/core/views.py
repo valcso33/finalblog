@@ -22,7 +22,7 @@ class HomeView(ListView):
 
 class TagFilterView(ListView):
     template_name = 'core/tag_filter.html'
-    context_object_name = 'object_list'  # Change this if needed
+    context_object_name = 'object_list'
     paginate_by = 10
 
     def get_queryset(self):
@@ -31,7 +31,7 @@ class TagFilterView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tags'] = Tag.objects.all()  # Pass all tags to the context
+        context['tags'] = Tag.objects.all()
         return context
 
 class PostView(DetailView):

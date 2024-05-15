@@ -9,7 +9,7 @@ from core.models import *
 
 
 def signup(request):
-    # redirect a user to the home page if he is already logged in
+    #felhasználó átirányitása home page-re ha már volt login
     if request.user.is_authenticated:
         return redirect('core:home')
     if request.method == 'POST':
@@ -17,7 +17,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            # display a nice message when a new user is registered
+            # regisztrációs üzenet
             messages.success(request, "Congratulations, you are now a registered user!")
             return redirect('core:home')
     else:
@@ -33,12 +33,12 @@ def log_in(request):
         if form.is_valid():
             email = form.cleaned_data["email"]
             password = form.cleaned_data["password"]
-            # We check if the data is correct
+            # adat ellenőrzés
             user = authenticate(email=email, password=password)
-            if user:  # If the returned object is not None
-                login(request, user)  # we connect the user
+            if user:
+                login(request, user)
                 return redirect('core:home')
-            else:  # otherwise an error will be displayed
+            else:
                 messages.error(request, 'Invalid email or password')
     else:
         form = LoginForm()
@@ -59,7 +59,7 @@ def profile(request, username):
 @login_required
 def edit_profile(request):
     if request.method == "POST":
-        # request.user.username is the original username
+        # request.user.username og felhasználónév
         form = EditProfileForm(request.user.username, request.POST, request.FILES)
         if form.is_valid():
             about_me = form.cleaned_data["about_me"]
@@ -76,7 +76,7 @@ def edit_profile(request):
             profile.save()
             return redirect("users:profile", username=user.username)
     else:
-        form = EditProfileForm(request.user.username)   # <-- add also here 
+        form = EditProfileForm(request.user.username)
     return render(request, "users/edit_profile.html", {'form': form})
 
 @login_required
